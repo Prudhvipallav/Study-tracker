@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Database (local user data — NOT committed)
+*.db
+*.db-shm
+*.db-wal
+~/.studenttrackpro/
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# PyInstaller
+*.spec.bak
+dist/
+build/
+
+# Generated assets
+StudentTrackPro/assets/icon.ico
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Installer output
+*.exe
+*.msi

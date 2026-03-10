@@ -1,0 +1,18 @@
+{
+    "name": "Law",
+    "primary": "#C0392B",
+    "secondary": "#FFD700",
+    "accent": "#E74C3C",
+    "background": "#0D0A0A",
+    "surface": "#1A1212",
+    "surface2": "#261A1A",
+    "text": "#F5F0E8",
+    "text_secondary": "#A89880",
+    "success": "#27AE60",
+    "warning": "#FFD700",
+    "danger": "#E74C3C",
+    "sidebar": "#080505",
+    "card": "#1F1515",
+    "border": "#3D2525",
+    "highlight": "#FFD700"
+}

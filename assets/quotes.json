@@ -1,0 +1,414 @@
+[
+    {
+        "quote": "The secret of getting ahead is getting started.",
+        "author": "Mark Twain"
+    },
+    {
+        "quote": "Don't watch the clock; do what it does. Keep going.",
+        "author": "Sam Levenson"
+    },
+    {
+        "quote": "Success is the sum of small efforts repeated day in and day out.",
+        "author": "Robert Collier"
+    },
+    {
+        "quote": "Education is the most powerful weapon which you can use to change the world.",
+        "author": "Nelson Mandela"
+    },
+    {
+        "quote": "The beautiful thing about learning is that no one can take it away from you.",
+        "author": "B.B. King"
+    },
+    {
+        "quote": "An investment in knowledge pays the best interest.",
+        "author": "Benjamin Franklin"
+    },
+    {
+        "quote": "The expert in anything was once a beginner.",
+        "author": "Helen Hayes"
+    },
+    {
+        "quote": "You don't have to be great to start, but you have to start to be great.",
+        "author": "Zig Ziglar"
+    },
+    {
+        "quote": "The more that you read, the more things you will know.",
+        "author": "Dr. Seuss"
+    },
+    {
+        "quote": "Learning never exhausts the mind.",
+        "author": "Leonardo da Vinci"
+    },
+    {
+        "quote": "Strive for progress, not perfection.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Hard work beats talent when talent doesn't work hard.",
+        "author": "Tim Notke"
+    },
+    {
+        "quote": "Believe you can and you're halfway there.",
+        "author": "Theodore Roosevelt"
+    },
+    {
+        "quote": "The only way to do great work is to love what you do.",
+        "author": "Steve Jobs"
+    },
+    {
+        "quote": "It always seems impossible until it's done.",
+        "author": "Nelson Mandela"
+    },
+    {
+        "quote": "Push yourself, because no one else is going to do it for you.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Great things never come from comfort zones.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Dream it. Wish it. Do it.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Success doesn't just find you. You have to go out and get it.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "The harder you work for something, the greater you'll feel when you achieve it.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Don't stop when you're tired. Stop when you're done.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Wake up with determination. Go to bed with satisfaction.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Do something today that your future self will thank you for.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Little things make big days.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "It's going to be hard, but hard does not mean impossible.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Don't wait for opportunity. Create it.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Sometimes we're tested not to show our weaknesses, but to discover our strengths.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "The key to success is to focus on goals, not obstacles.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Dream bigger. Do bigger.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "You are never too old to set another goal or to dream a new dream.",
+        "author": "C.S. Lewis"
+    },
+    {
+        "quote": "Champions keep playing until they get it right.",
+        "author": "Billie Jean King"
+    },
+    {
+        "quote": "I find that the harder I work, the more luck I seem to have.",
+        "author": "Thomas Jefferson"
+    },
+    {
+        "quote": "There are no shortcuts to any place worth going.",
+        "author": "Beverly Sills"
+    },
+    {
+        "quote": "The difference between ordinary and extraordinary is that little extra.",
+        "author": "Jimmy Johnson"
+    },
+    {
+        "quote": "The future belongs to those who believe in the beauty of their dreams.",
+        "author": "Eleanor Roosevelt"
+    },
+    {
+        "quote": "It does not matter how slowly you go as long as you do not stop.",
+        "author": "Confucius"
+    },
+    {
+        "quote": "Our greatest weakness lies in giving up. The most certain way to succeed is to try one more time.",
+        "author": "Thomas Edison"
+    },
+    {
+        "quote": "You miss 100% of the shots you don't take.",
+        "author": "Wayne Gretzky"
+    },
+    {
+        "quote": "Whether you think you can or think you can't, you're right.",
+        "author": "Henry Ford"
+    },
+    {
+        "quote": "The only limit to our realization of tomorrow will be our doubts of today.",
+        "author": "Franklin Roosevelt"
+    },
+    {
+        "quote": "Start where you are. Use what you have. Do what you can.",
+        "author": "Arthur Ashe"
+    },
+    {
+        "quote": "Act as if what you do makes a difference. It does.",
+        "author": "William James"
+    },
+    {
+        "quote": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "author": "Winston Churchill"
+    },
+    {
+        "quote": "Opportunities don't happen. You create them.",
+        "author": "Chris Grosser"
+    },
+    {
+        "quote": "It's not whether you get knocked down, it's whether you get up.",
+        "author": "Vince Lombardi"
+    },
+    {
+        "quote": "Try not to become a person of success, but rather try to become a person of value.",
+        "author": "Albert Einstein"
+    },
+    {
+        "quote": "Falling down is how we grow. Staying down is how we die.",
+        "author": "Brian Vaszily"
+    },
+    {
+        "quote": "The two most important days in your life are the day you are born and the day you find out why.",
+        "author": "Mark Twain"
+    },
+    {
+        "quote": "Don't be pushed around by the fears in your mind. Be led by the dreams in your heart.",
+        "author": "Roy T. Bennett"
+    },
+    {
+        "quote": "Everything you've ever wanted is on the other side of fear.",
+        "author": "George Addair"
+    },
+    {
+        "quote": "Hardships often prepare ordinary people for an extraordinary destiny.",
+        "author": "C.S. Lewis"
+    },
+    {
+        "quote": "Science is not only a disciple of reason but, also, one of romance and passion.",
+        "author": "Stephen Hawking"
+    },
+    {
+        "quote": "The good physician treats the disease; the great physician treats the patient who has the disease.",
+        "author": "William Osler"
+    },
+    {
+        "quote": "Medicine is not only a science; it is also an art.",
+        "author": "Paracelsus"
+    },
+    {
+        "quote": "Wherever the art of medicine is loved, there is also a love of humanity.",
+        "author": "Hippocrates"
+    },
+    {
+        "quote": "The art of medicine consists in amusing the patient while nature cures the disease.",
+        "author": "Voltaire"
+    },
+    {
+        "quote": "Saving one life is as if you had saved the entire world.",
+        "author": "Talmud"
+    },
+    {
+        "quote": "Law is reason, free from passion.",
+        "author": "Aristotle"
+    },
+    {
+        "quote": "In law, a man is guilty when he violates the rights of others.",
+        "author": "Immanuel Kant"
+    },
+    {
+        "quote": "The law is reason unaffected by desire.",
+        "author": "Aristotle"
+    },
+    {
+        "quote": "The first duty of a man is to think for himself.",
+        "author": "Jose Marti"
+    },
+    {
+        "quote": "Justice is truth in action.",
+        "author": "Benjamin Disraeli"
+    },
+    {
+        "quote": "Compound interest is the eighth wonder of the world. He who understands it, earns it.",
+        "author": "Albert Einstein"
+    },
+    {
+        "quote": "The more I practice, the luckier I get.",
+        "author": "Gary Player"
+    },
+    {
+        "quote": "Genius is one percent inspiration and ninety-nine percent perspiration.",
+        "author": "Thomas Edison"
+    },
+    {
+        "quote": "Success usually comes to those who are too busy to be looking for it.",
+        "author": "Henry David Thoreau"
+    },
+    {
+        "quote": "Your time is limited, so don't waste it living someone else's life.",
+        "author": "Steve Jobs"
+    },
+    {
+        "quote": "Two roads diverged in a wood, and I took the one less traveled by.",
+        "author": "Robert Frost"
+    },
+    {
+        "quote": "You only live once, but if you do it right, once is enough.",
+        "author": "Mae West"
+    },
+    {
+        "quote": "In the middle of difficulty lies opportunity.",
+        "author": "Albert Einstein"
+    },
+    {
+        "quote": "Life is what happens when you're busy making other plans.",
+        "author": "John Lennon"
+    },
+    {
+        "quote": "Darkness cannot drive out darkness; only light can do that.",
+        "author": "Martin Luther King Jr."
+    },
+    {
+        "quote": "Being deeply loved by someone gives you strength, while loving someone deeply gives you courage.",
+        "author": "Lao Tzu"
+    },
+    {
+        "quote": "It is during our darkest moments that we must focus to see the light.",
+        "author": "Aristotle"
+    },
+    {
+        "quote": "Spread love everywhere you go.",
+        "author": "Mother Teresa"
+    },
+    {
+        "quote": "When you reach the end of your rope, tie a knot in it and hang on.",
+        "author": "Franklin D. Roosevelt"
+    },
+    {
+        "quote": "Always remember that you are absolutely unique. Just like everyone else.",
+        "author": "Margaret Mead"
+    },
+    {
+        "quote": "Don't judge each day by the harvest you reap, but by the seeds that you plant.",
+        "author": "Robert Louis Stevenson"
+    },
+    {
+        "quote": "The future belongs to those who prepare for it today.",
+        "author": "Malcolm X"
+    },
+    {
+        "quote": "Motivation is what gets you started. Habit is what keeps you going.",
+        "author": "Jim Ryun"
+    },
+    {
+        "quote": "Your passion is waiting for your courage to catch up.",
+        "author": "Isabelle Lafleche"
+    },
+    {
+        "quote": "Impossible is just an opinion.",
+        "author": "Paulo Coelho"
+    },
+    {
+        "quote": "What we think, we become.",
+        "author": "Buddha"
+    },
+    {
+        "quote": "Keep your eyes on the stars, and your feet on the ground.",
+        "author": "Theodore Roosevelt"
+    },
+    {
+        "quote": "When I let go of what I am, I become what I might be.",
+        "author": "Lao Tzu"
+    },
+    {
+        "quote": "A person who never made a mistake never tried anything new.",
+        "author": "Albert Einstein"
+    },
+    {
+        "quote": "Well done is better than well said.",
+        "author": "Benjamin Franklin"
+    },
+    {
+        "quote": "It is not the mountain we conquer but ourselves.",
+        "author": "Edmund Hillary"
+    },
+    {
+        "quote": "Even if you're on the right track, you'll get run over if you just sit there.",
+        "author": "Will Rogers"
+    },
+    {
+        "quote": "Remember that not getting what you want is sometimes a wonderful stroke of luck.",
+        "author": "Dalai Lama"
+    },
+    {
+        "quote": "You become what you believe.",
+        "author": "Oprah Winfrey"
+    },
+    {
+        "quote": "The best time to plant a tree was 20 years ago. The second best time is now.",
+        "author": "Chinese Proverb"
+    },
+    {
+        "quote": "Knowing is not enough; we must apply. Wishing is not enough; we must do.",
+        "author": "Johann Wolfgang Von Goethe"
+    },
+    {
+        "quote": "The best preparation for tomorrow is doing your best today.",
+        "author": "H. Jackson Brown Jr."
+    },
+    {
+        "quote": "We may encounter many defeats but we must not be defeated.",
+        "author": "Maya Angelou"
+    },
+    {
+        "quote": "Life is either a daring adventure or nothing at all.",
+        "author": "Helen Keller"
+    },
+    {
+        "quote": "Many of life's failures are people who did not realize how close they were to success when they gave up.",
+        "author": "Thomas Edison"
+    },
+    {
+        "quote": "You have brains in your head. You have feet in your shoes. You can steer yourself any direction you choose.",
+        "author": "Dr. Seuss"
+    },
+    {
+        "quote": "If you can dream it, you can achieve it.",
+        "author": "Zig Ziglar"
+    },
+    {
+        "quote": "You don't have to be perfect to be amazing.",
+        "author": "Unknown"
+    },
+    {
+        "quote": "Be the change you wish to see in the world.",
+        "author": "Mahatma Gandhi"
+    },
+    {
+        "quote": "In the middle of every difficulty lies opportunity.",
+        "author": "Albert Einstein"
+    },
+    {
+        "quote": "Study hard what interests you the most in the most undisciplined, irreverent and original manner possible.",
+        "author": "Richard Feynman"
+    }
+]
