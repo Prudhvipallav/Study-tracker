@@ -1,52 +1,92 @@
 # 🎓 StudentTrack Pro
 
-> The ultimate student productivity companion — built for Engineering, Medical, Law & Competitive Exam students.
+<div align="center">
+
+**The ultimate all-in-one student productivity app — built for Engineering, Medical, Law & Competitive students**
+
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![CustomTkinter](https://img.shields.io/badge/CustomTkinter-5.x-blue?style=for-the-badge)
+![SQLite](https://img.shields.io/badge/SQLite-Local--First-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+
+</div>
 
 ---
 
-## ✨ Features
+## ✨ Features at a Glance
 
-| Module | What it does |
-|---|---|
-| 🏠 **Home Dashboard** | Greeting, daily quote, XP bar, quick stats, timetable preview, exam countdown, habit check-in |
-| ✅ **To-Do List** | Priority tasks, filters (Today / Week / High Priority), XP on completion |
-| 🎯 **Goals** | Short & long-term goals with milestones and subtasks, progress bars |
-| 🔁 **Habits** | Daily check-in, streak tracking, 5-week GitHub-style heatmap |
-| 📅 **Timetable** | Weekly schedule grid, today highlighted, colored subject slots |
-| ⏳ **Countdown** | Exam countdown timers with color-coded urgency (>30d / 7-30d / <7d) |
-| 🍅 **Pomodoro** | Circular timer, auto-session logging, 7-day study bar chart, sound alerts |
-| 📝 **Notes & Journal** | Two-panel editor, search, pin, sort, Journal Today template, export .txt |
-| 🃏 **Flashcards** | Decks, study mode (flip), quiz mode (text input scoring), XP rewards |
-| 📚 **Resources** | Link/video/PDF/book library, search, filter by type, favorites, open URL |
-| ❤️ **Health** | Sleep chart, water bottle tracker, mood emoji log, exercise log |
-| 📋 **Attendance** | Per-subject %, can-miss/need-more calculator, mark present/absent/late |
-| 📊 **Stats** | Matplotlib bar charts, task rate, habit analytics, goal progress, XP history |
-| 🏆 **Gamification** | 17 badges, XP levels with stream names, multi-profile leaderboard |
-| 📋 **Weekly Review** | 7-day summary, encouragement message, badges earned, day-by-day breakdown |
-| ⚙️ **Settings** | Profile edit, dark/light mode, notifications config, JSON/CSV export |
+| Module | Description |
+|--------|-------------|
+| 🏠 **Home Dashboard** | Daily quote, XP bar, quick stats, today's schedule & exam countdown |
+| ✅ **To-Do List** | Priority tasks, filters, overdue highlighting, XP on completion |
+| 🎯 **Goals** | Long/short-term goals with milestones, subtasks & progress bars |
+| 🔁 **Habits** | Daily check-in, streak tracker, 5-week GitHub-style heatmap |
+| 📅 **Timetable** | Visual weekly schedule grid with color-coded subjects |
+| ⏳ **Countdown** | Exam countdown timers with color-coded urgency |
+| 🍅 **Pomodoro** | Circular timer, auto session logging, 7-day focus chart |
+| 📝 **Notes & Journal** | Two-panel editor, search, pin, journal template, export |
+| 🃏 **Flashcards** | Decks, study mode (flip), quiz mode (text input), XP rewards |
+| 📚 **Resources** | Link/video/PDF library with search, filter & favorites |
+| ❤️ **Health Dashboard** | Sleep chart, water tracker, mood emoji log, exercise log |
+| 📋 **Attendance** | Per-subject %, can-miss/need-more calculator |
+| 📊 **Stats & Analytics** | Charts (Matplotlib), task rate, habit analytics, goal progress |
+| 🏆 **Gamification** | 17 badges, XP levels, multi-profile leaderboard |
+| 🗓 **Weekly Review** | 7-day summary, encouragement, badges earned, day-by-day |
+| ⚙️ **Settings** | Profile edit, dark/light mode, notifications, JSON/CSV export |
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Python 3.11+
-- Windows 10/11 (macOS/Linux also works)
+### 1. Clone the repo
+```bash
+git clone https://github.com/Prudhvipallav/Study-tracker.git
+cd Study-tracker
+```
 
-### 1. Install dependencies
+### 2. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Run the app
+### 3. Run the app
 ```bash
 python main.py
 ```
 
-The app will:
-1. Initialize the SQLite database in `~/.studenttrackpro/studenttrack.db`
-2. Run the onboarding wizard (first launch only)
-3. Load the main dashboard
+The **onboarding wizard** will guide you through creating your first profile on first launch.
+
+---
+
+## 🏆 Gamification System
+
+Every action earns you XP — complete tasks, build habits, stay consistent!
+
+| Action | XP |
+|--------|----|
+| ✅ Complete a task | +10 XP |
+| 🔁 Habit check-in | +5 XP |
+| 🎯 Complete a goal | +100 XP |
+| 🍅 Finish a Pomodoro | +15 XP |
+| ❤️ Log health data | +3 XP |
+| 🗓 Weekly review | +20 XP |
+
+Every **500 XP = Level Up!** Level names are stream-specific (e.g. Engineering: *Freshman → Graduate → Architect → Legend*)
+
+### 🏅 17 Badges to Earn
+`First Step` · `Habit Forming` · `Week Warrior` · `Unstoppable` · `Goal Setter` · `Goal Crusher` · `Milestone Master` · `Focus Machine` · `Deep Worker` · `Scholar` · `Knowledge Seeker` · `Hydration Hero` · `Athlete` · `Early Bird` · `Perfect Attendance` · `Rising Star` · `Elite Student`
+
+---
+
+## 🎨 Stream Themes
+
+| Stream | Color | Level Names |
+|--------|-------|-------------|
+| 🔧 Engineering | Deep Blue | Freshman → Legend |
+| 🩺 Medical | Teal Green | Intern → Lifesaver |
+| ⚖️ Law | Crimson Red | Clerk → Justice |
+| 📖 Competitive | Purple | Aspirant → Legend |
 
 ---
 
@@ -54,106 +94,33 @@ The app will:
 
 ```
 StudentTrackPro/
-├── main.py                      # App entry point
+├── main.py                  # App entry point (single-root CTk)
 ├── requirements.txt
 ├── database/
-│   ├── __init__.py
-│   └── db.py                    # Full SQLite schema + CRUD + XP/badge helpers
-├── modules/
-│   ├── theme_manager.py         # ThemeManager class
-│   ├── onboarding.py            # 3-step onboarding wizard
-│   ├── home.py                  # Dashboard
-│   ├── todo.py                  # To-do list
-│   ├── goals.py                 # Goals + milestones + subtasks
-│   ├── habits.py                # Habit tracker + heatmap
-│   ├── timetable.py             # Weekly schedule grid
-│   ├── countdown.py             # Exam countdown
-│   ├── pomodoro.py              # Pomodoro timer
-│   ├── notes.py                 # Notes & journal
-│   ├── flashcards.py            # Flashcard decks + study/quiz modes
-│   ├── resources.py             # Resource library
-│   ├── health.py                # Health dashboard (4 tabs)
-│   ├── attendance.py            # Attendance tracker
-│   ├── stats.py                 # Analytics dashboard
-│   ├── gamification.py          # Badges + leaderboard
-│   ├── weekly_review.py         # Weekly summary
-│   └── settings.py              # App settings
-├── assets/
-│   ├── icon.ico                 # Auto-generated on first run
-│   ├── generate_icon.py         # Icon generation script
-│   ├── quotes.json              # 100+ motivational quotes
-│   └── themes/
-│       ├── engineering.json
-│       ├── medical.json
-│       ├── law.json
-│       └── competitive.json
-└── installer/
-    ├── build.spec               # PyInstaller spec
-    └── installer.nsi            # NSIS installer script
+│   └── db.py                # SQLite schema + CRUD + XP/badge engine
+├── modules/                 # 16 feature modules
+│   ├── home.py · todo.py · goals.py · habits.py
+│   ├── timetable.py · countdown.py · pomodoro.py
+│   ├── notes.py · flashcards.py · resources.py
+│   ├── health.py · attendance.py · stats.py
+│   ├── gamification.py · weekly_review.py · settings.py
+│   └── theme_manager.py
+└── assets/
+    ├── quotes.json          # 100+ motivational quotes
+    └── themes/              # 4 stream colour themes
 ```
 
 ---
 
-## 🏆 Gamification System
+## 📦 Tech Stack
 
-| Action | XP |
-|---|---|
-| Complete a task | 10 XP |
-| Habit check-in | 5 XP |
-| Complete a goal | 100 XP |
-| Complete a milestone | 25 XP |
-| Finish a Pomodoro | 15 XP |
-| Log health data | 3 XP |
-| Weekly review | 20 XP |
+- **GUI** — [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) (modern dark-mode Tkinter)
+- **Database** — SQLite3 (built-in, fully local)
+- **Charts** — Matplotlib + Pillow
+- **Notifications** — Plyer
+- **Packaging** — PyInstaller
 
-Every **500 XP** = Level up! Level names are stream-specific (e.g., Engineering: Freshman → Legend).
-
-## 🏅 Badges (17 total)
-
-First Step, Habit Forming, Week Warrior, Unstoppable, Goal Setter, Goal Crusher, Milestone Master, Focus Machine, Deep Worker, Scholar, Knowledge Seeker, Hydration Hero, Athlete, Early Bird, Perfect Attendance, Rising Star, Elite Student.
-
----
-
-## 🎨 Stream Themes
-
-| Stream | Primary Color | Feel |
-|---|---|---|
-| 🔧 Engineering | Deep Blue | Technical, precise |
-| 🏥 Medical | Teal Green | Clean, clinical |
-| ⚖️ Law | Deep Purple | Professional, authoritative |
-| 🎯 Competitive | Crimson Red | High energy, competitive |
-
----
-
-## 🔨 Building a Standalone Executable
-
-```bash
-pip install pyinstaller
-pyinstaller installer/build.spec
-```
-
-Output will be in `dist/StudentTrackPro/`
-
----
-
-## 📊 Database
-
-All data is stored locally in `~/.studenttrackpro/studenttrack.db` (SQLite).
-
-**No internet connection required. Your data never leaves your device.**
-
-Export your data anytime via **Settings → Data → Export JSON/CSV**.
-
----
-
-## 🛠️ Tech Stack
-
-- **GUI**: CustomTkinter 5.x (modern, dark-mode ready Tkinter)
-- **Database**: SQLite3 (built into Python)
-- **Charts**: Matplotlib + Pillow
-- **Notifications**: Plyer
-- **Scheduling**: Schedule
-- **Packaging**: PyInstaller + NSIS
+> 🔒 **100% local-first. No internet required. Your data never leaves your device.**
 
 ---
 
@@ -163,4 +130,6 @@ MIT License — free to use, modify, and distribute.
 
 ---
 
-*Built with ❤️ for students who refuse to give up.*
+<div align="center">
+Built with ❤️ for students who refuse to give up.
+</div>
