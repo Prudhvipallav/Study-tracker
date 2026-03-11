@@ -1,0 +1,18 @@
+{
+    "name": "Competitive",
+    "primary": "#9B59B6",
+    "secondary": "#BF5AF2",
+    "accent": "#FFD60A",
+    "background": "#0C0A14",
+    "surface": "#15121F",
+    "surface2": "#1E1A2E",
+    "text": "#F0EAFF",
+    "text_secondary": "#9B8EC4",
+    "success": "#32D74B",
+    "warning": "#FFD60A",
+    "danger": "#FF453A",
+    "sidebar": "#080610",
+    "card": "#191525",
+    "border": "#2D2650",
+    "highlight": "#BF5AF2"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Medical",
+    "primary": "#00C896",
+    "secondary": "#00E5B0",
+    "accent": "#FF4D6D",
+    "background": "#0A0F0D",
+    "surface": "#111A15",
+    "surface2": "#1A2B20",
+    "text": "#E8F5EE",
+    "text_secondary": "#7BAF8E",
+    "success": "#00C896",
+    "warning": "#FFB347",
+    "danger": "#FF4D6D",
+    "sidebar": "#060D09",
+    "card": "#152019",
+    "border": "#2A4035",
+    "highlight": "#00E5B0"
+}
