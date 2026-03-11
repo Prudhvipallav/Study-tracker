@@ -17,16 +17,26 @@ class ProfileProvider extends ChangeNotifier {
   Future<void> _load() async {
     _loading = true;
     notifyListeners();
-    _profile = await DbHelper.instance.fetchOne('SELECT * FROM profiles LIMIT 1');
-    if (_profile != null) {
-      await ThemeManager.loadTheme(_profile!['stream'] as String);
+    try {
+      _profile = await DbHelper.instance.fetchOne('SELECT * FROM profiles LIMIT 1');
+      if (_profile != null) {
+        final stream = _profile!['stream'] as String? ?? 'engineering';
+        await ThemeManager.loadTheme(stream);
+      }
+    } catch (e) {
+      debugPrint('ProfileProvider._load error: $e');
+      _profile = null;
     }
     _loading = false;
     notifyListeners();
   }
 
   Future<void> refresh() async {
-    _profile = await DbHelper.instance.fetchOne('SELECT * FROM profiles LIMIT 1');
+    try {
+      _profile = await DbHelper.instance.fetchOne('SELECT * FROM profiles LIMIT 1');
+    } catch (e) {
+      debugPrint('ProfileProvider.refresh error: $e');
+    }
     notifyListeners();
   }
 

@@ -5,14 +5,23 @@ import 'package:flutter/material.dart';
 class ThemeManager {
   static Map<String, dynamic> _theme = {};
   static String _currentStream = 'engineering';
+  static bool _loaded = false;
 
   static Future<void> loadTheme(String stream) async {
-    _currentStream = stream;
-    final String jsonStr =
-        await rootBundle.loadString('assets/themes/$stream.json');
-    _theme = json.decode(jsonStr);
+    try {
+      _currentStream = stream;
+      final String jsonStr =
+          await rootBundle.loadString('assets/themes/$stream.json');
+      _theme = json.decode(jsonStr);
+      _loaded = true;
+    } catch (e) {
+      debugPrint('ThemeManager.loadTheme error: $e — using defaults');
+      _theme = {};
+      _loaded = false;
+    }
   }
 
+  static bool get isLoaded => _loaded;
   static String get stream => _currentStream;
 
   static Color get primary => _colorFromHex(_theme['primary'] ?? '#1E90FF');
