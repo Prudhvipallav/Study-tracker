@@ -33,6 +33,34 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Generate launcher icons (PNG for all densities)
+        working-directory: mobile
+        run: |
+          pip install Pillow --quiet
+          python3 - <<'EOF'
+          import os
+          from PIL import Image, ImageDraw
+
+          sizes = {
+              'mipmap-mdpi':    48,
+              'mipmap-hdpi':    72,
+              'mipmap-xhdpi':   96,
+              'mipmap-xxhdpi':  144,
+              'mipmap-xxxhdpi': 192,
+          }
+          base = 'android/app/src/main/res'
+          for folder, size in sizes.items():
+              path = os.path.join(base, folder)
+              os.makedirs(path, exist_ok=True)
+              img = Image.new('RGBA', (size, size), (30, 144, 255, 255))
+              draw = ImageDraw.Draw(img)
+              m = size // 6
+              draw.ellipse([m, m, size - m, size - m], fill=(255, 255, 255, 255))
+              img.save(os.path.join(path, 'ic_launcher.png'))
+              img.save(os.path.join(path, 'ic_launcher_round.png'))
+          print('Launcher icons generated for all densities.')
+          EOF
+
       - name: Get dependencies
         working-directory: mobile
         run: flutter pub get
@@ -45,7 +73,7 @@ jobs:
         working-directory: mobile
         run: flutter build apk --release --split-per-abi
 
-      - name: Upload universal APK
+      - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
           name: studenttrack-pro-apk
@@ -61,25 +89,12 @@ jobs:
           body: |
             ## 📱 StudentTrack Pro Mobile — Android APK
 
-            ### What's included
-            - ✅ Task Management with priority & swipe gestures
-            - 🔁 Habit Tracking with streak system
-            - 🍅 Pomodoro Focus Timer
-            - ⏰ Exam Countdown
-            - 🎯 Goals & Milestones (view + check-off)
-            - 📝 Quick Notes
-            - ❤️ Health Dashboard (Sleep / Water / Mood / Exercise)
-            - 📊 Attendance Tracker
-            - 📈 Stats & Analytics
-            - 🏅 23 Badge System + XP Levels
-            - ⚙️ Settings & Notifications
-
             ### Installation
-            1. Download the `app-arm64-v8a-release.apk` (for most modern phones)
+            1. Download `app-arm64-v8a-release.apk` (most modern phones)
             2. Enable "Install from unknown sources" in Android settings
             3. Install and enjoy!
 
-            > Built automatically from `mobile/` on push to main.
+            Built from commit `${{ github.sha }}`
           files: mobile/build/app/outputs/flutter-apk/*.apk
           generate_release_notes: false
         env:
