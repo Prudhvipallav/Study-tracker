@@ -13,6 +13,13 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   Map<String, dynamic>? _profile;
 
+  static const _streamNames = {
+    'engineering': '🔧 Engineering',
+    'medical': '🩺 Medical',
+    'law': '⚖️ Law',
+    'competitive': '📖 Competitive',
+  };
+
   @override
   void initState() { super.initState(); _load(); }
 
@@ -26,7 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final stream = _profile?['stream'] as String? ?? 'engineering';
     final name = _profile?['name'] as String? ?? '';
     final avatar = _profile?['avatar'] as String? ?? '🎓';
-    static const streamNames = {'engineering': '🔧 Engineering', 'medical': '🩺 Medical', 'law': '⚖️ Law', 'competitive': '📖 Competitive'};
+
 
     return Scaffold(
       backgroundColor: ThemeManager.background,

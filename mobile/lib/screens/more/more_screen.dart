@@ -6,10 +6,12 @@ import '../health/health_screen.dart';
 import '../attendance/attendance_screen.dart';
 import '../countdown/countdown_screen.dart';
 import '../goals/goals_screen.dart';
+import '../flashcards/flashcards_screen.dart';
 import 'badges_screen.dart';
 import 'stats_screen.dart';
 import 'notes_screen.dart';
 import 'settings_screen.dart';
+
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -17,6 +19,7 @@ class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = [
+      _MoreItem('🃏', 'Flashcards', 'Study with spaced repetition', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const FlashcardsScreen()))),
       _MoreItem('⏰', 'Countdowns', 'Track exam dates', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CountdownScreen()))),
       _MoreItem('🎯', 'Goals', 'View goals & milestones', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const GoalsScreen()))),
       _MoreItem('❤️', 'Health', 'Sleep, water, mood, exercise', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HealthScreen()))),
@@ -26,6 +29,7 @@ class MoreScreen extends StatelessWidget {
       _MoreItem('🏅', 'Badges', 'Achievements unlocked', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const BadgesScreen()))),
       _MoreItem('⚙️', 'Settings', 'Notifications & preferences', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()))),
     ];
+
 
     return Scaffold(
       backgroundColor: ThemeManager.background,
