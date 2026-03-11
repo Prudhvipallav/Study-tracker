@@ -87,8 +87,8 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: mobile-v${{ github.run_number }}
-          name: "📱 Mobile App Build #${{ github.run_number }}"
+          tag_name: v0.1-mobile
+          name: "📱 StudentTrack Pro Mobile v0.1"
           body: |
             ## 📱 StudentTrack Pro Mobile — Android APK
 
