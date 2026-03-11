@@ -87,6 +87,9 @@ class App(ctk.CTk):
         self._swap(OnboardingScreen(self))
 
     def show_main_app(self, profile_id: int):
+        from datetime import datetime
+        from database.db import update
+        update("profiles", {"last_seen": datetime.now().isoformat()}, {"id": profile_id})
         self.geometry("1280x800")
         self.minsize(1100, 700)
         self._swap(MainAppFrame(self, profile_id))

@@ -939,7 +939,7 @@ class SharedPomodoroTab(ctk.CTkFrame):
         self._after_id = self.after(1000, self._tick)
 
     def _on_phase_end(self):
-        # Award XP to all members
+        # Award XP to all members when a work cycle completes
         members = db.fetch_all(
             "SELECT profile_id FROM shared_pomodoro_members WHERE session_id=?",
             [self._session_id]
@@ -947,10 +947,16 @@ class SharedPomodoroTab(ctk.CTkFrame):
         session = db.fetch_one("SELECT * FROM shared_pomodoro WHERE id=?", [self._session_id])
         if self._phase == "work" and session:
             for m in members:
-                db.update("shared_pomodoro_members",
-                           {"cycles_completed": ctk.CTkFont},  # placeholder — update via raw query
-                           {"session_id": self._session_id, "profile_id": m["profile_id"]})
-                db.award_xp(m["profile_id"], 20, "Shared Pomodoro cycle")  # 15 + 5 buddy bonus
+                # Increment cycles_completed via raw SQL
+                conn = db.get_db()
+                conn.execute(
+                    "UPDATE shared_pomodoro_members SET cycles_completed = cycles_completed + 1 "
+                    "WHERE session_id=? AND profile_id=?",
+                    [self._session_id, m["profile_id"]]
+                )
+                conn.commit()
+                conn.close()
+                db.award_xp(m["profile_id"], 20, "Shared Pomodoro cycle (+5 buddy bonus)")
             db.check_and_award_badges(self._pid)
             self._refresh_xp()
             # Switch to break
