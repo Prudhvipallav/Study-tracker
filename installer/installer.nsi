@@ -25,7 +25,8 @@ Section "Install"
   SetOutPath "$INSTDIR"
 
   ; Copy the single EXE produced by PyInstaller --onefile
-  File "dist\StudentTrackPro.exe"
+  ; .nsi is in installer/, so ..\ goes up to repo root where dist/ lives
+  File "..\dist\StudentTrackPro.exe"
 
   ; Registry entries
   WriteRegStr HKLM "Software\${APPNAME}" "Install_Dir" "$INSTDIR"
