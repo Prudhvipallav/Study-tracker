@@ -311,6 +311,7 @@ class MainAppFrame(ctk.CTkFrame):
         ("stats",        "📊", "Stats"),
         ("gamification", "🏆", "Badges"),
         ("weekly_review","🗓",  "Review"),
+        ("buddy",        "🤝", "Buddy"),
         ("settings",     "⚙️",  "Settings"),
     ]
 
@@ -330,6 +331,7 @@ class MainAppFrame(ctk.CTkFrame):
         "stats":        ("modules.stats",        "StatsModule"),
         "gamification": ("modules.gamification", "GamificationModule"),
         "weekly_review":("modules.weekly_review","WeeklyReviewModule"),
+        "buddy":        ("modules.buddy",        "BuddyModule"),
         "settings":     ("modules.settings",     "SettingsModule"),
     }
 

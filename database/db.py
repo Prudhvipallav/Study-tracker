@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS profiles (
     theme TEXT NOT NULL,
     xp INTEGER DEFAULT 0,
     level INTEGER DEFAULT 1,
+    last_seen TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -271,6 +272,61 @@ CREATE TABLE IF NOT EXISTS settings (
     attendance_warning_percent INTEGER DEFAULT 80,
     FOREIGN KEY (profile_id) REFERENCES profiles(id)
 );
+
+-- Phase 13: Buddy / Accountability Partner tables
+CREATE TABLE IF NOT EXISTS nudges (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    from_profile_id INTEGER NOT NULL,
+    to_profile_id INTEGER NOT NULL,
+    message TEXT NOT NULL,
+    emoji TEXT DEFAULT '\U0001f4aa',
+    is_read INTEGER DEFAULT 0,
+    sent_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (from_profile_id) REFERENCES profiles(id),
+    FOREIGN KEY (to_profile_id) REFERENCES profiles(id)
+);
+
+CREATE TABLE IF NOT EXISTS shared_goals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    deadline TEXT,
+    progress_percent INTEGER DEFAULT 0,
+    created_by_profile_id INTEGER NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    is_completed INTEGER DEFAULT 0,
+    FOREIGN KEY (created_by_profile_id) REFERENCES profiles(id)
+);
+
+CREATE TABLE IF NOT EXISTS shared_goal_members (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    shared_goal_id INTEGER NOT NULL,
+    profile_id INTEGER NOT NULL,
+    contribution_percent INTEGER DEFAULT 0,
+    FOREIGN KEY (shared_goal_id) REFERENCES shared_goals(id),
+    FOREIGN KEY (profile_id) REFERENCES profiles(id)
+);
+
+CREATE TABLE IF NOT EXISTS shared_pomodoro (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    initiated_by_profile_id INTEGER NOT NULL,
+    subject TEXT,
+    work_duration INTEGER DEFAULT 25,
+    break_duration INTEGER DEFAULT 5,
+    started_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    is_active INTEGER DEFAULT 1,
+    FOREIGN KEY (initiated_by_profile_id) REFERENCES profiles(id)
+);
+
+CREATE TABLE IF NOT EXISTS shared_pomodoro_members (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id INTEGER NOT NULL,
+    profile_id INTEGER NOT NULL,
+    joined_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    cycles_completed INTEGER DEFAULT 0,
+    FOREIGN KEY (session_id) REFERENCES shared_pomodoro(id),
+    FOREIGN KEY (profile_id) REFERENCES profiles(id)
+);
 """
 
 
@@ -447,23 +503,30 @@ def award_xp(profile_id: int, amount: int, reason: str):
 # ---------------------------------------------------------------------------
 
 BADGE_DEFINITIONS = {
-    "first_task":          ("First Step", "✅"),
-    "streak_3":            ("Habit Forming", "🔥"),
-    "streak_7":            ("Week Warrior", "⚔️"),
-    "streak_30":           ("Unstoppable", "💥"),
-    "first_goal":          ("Goal Setter", "🎯"),
-    "goal_crusher":        ("Goal Crusher", "💪"),
-    "milestone_master":    ("Milestone Master", "🏆"),
-    "pomodoro_10":         ("Focus Machine", "🍅"),
-    "pomodoro_50":         ("Deep Worker", "🧠"),
-    "note_taker":          ("Scholar", "📚"),
-    "deck_creator":        ("Knowledge Seeker", "🃏"),
-    "hydrated":            ("Hydration Hero", "💧"),
-    "athlete":             ("Athlete", "🏃"),
-    "early_bird":          ("Early Bird", "🌅"),
-    "attendance_perfect":  ("Perfect Attendance", "⭐"),
-    "level_5":             ("Rising Star", "🌟"),
-    "level_10":            ("Elite Student", "👑"),
+    "first_task":             ("First Step", "✅"),
+    "streak_3":               ("Habit Forming", "🔥"),
+    "streak_7":               ("Week Warrior", "⚔️"),
+    "streak_30":              ("Unstoppable", "💥"),
+    "first_goal":             ("Goal Setter", "🎯"),
+    "goal_crusher":           ("Goal Crusher", "💪"),
+    "milestone_master":       ("Milestone Master", "🏆"),
+    "pomodoro_10":            ("Focus Machine", "🍅"),
+    "pomodoro_50":            ("Deep Worker", "🧠"),
+    "note_taker":             ("Scholar", "📚"),
+    "deck_creator":           ("Knowledge Seeker", "🃏"),
+    "hydrated":               ("Hydration Hero", "💧"),
+    "athlete":                ("Athlete", "🏃"),
+    "early_bird":             ("Early Bird", "🌅"),
+    "attendance_perfect":     ("Perfect Attendance", "⭐"),
+    "level_5":                ("Rising Star", "🌟"),
+    "level_10":               ("Elite Student", "👑"),
+    # Phase 13 — Buddy badges
+    "first_nudge":            ("Good Vibes", "💌"),
+    "nudge_streak_7":         ("Hype Man", "📣"),
+    "shared_goal_complete":   ("Better Together", "🤝"),
+    "buddy_pomodoro_5":       ("Study Duo", "👥"),
+    "buddy_pomodoro_25":      ("Inseparable", "🔗"),
+    "shared_goal_creator":    ("Team Player", "🧩"),
 }
 
 
@@ -586,6 +649,40 @@ def check_and_award_badges(profile_id: int) -> list:
         )
         if deck_count and deck_count["c"] >= 5 and award_badge(profile_id, "deck_creator"):
             newly_earned.append("deck_creator")
+
+        # --- Buddy badges ---
+        nudge_count = fetch_one(
+            "SELECT COUNT(*) as c FROM nudges WHERE from_profile_id = ?", [profile_id]
+        )
+        if nudge_count and nudge_count["c"] >= 1 and award_badge(profile_id, "first_nudge"):
+            newly_earned.append("first_nudge")
+
+        shared_goals_created = fetch_one(
+            "SELECT COUNT(*) as c FROM shared_goals WHERE created_by_profile_id = ?", [profile_id]
+        )
+        if shared_goals_created and shared_goals_created["c"] >= 3 and award_badge(profile_id, "shared_goal_creator"):
+            newly_earned.append("shared_goal_creator")
+
+        completed_shared = fetch_one(
+            """SELECT COUNT(*) as c FROM shared_goals sg
+               JOIN shared_goal_members sgm ON sg.id=sgm.shared_goal_id
+               WHERE sgm.profile_id=? AND sg.is_completed=1""",
+            [profile_id]
+        )
+        if completed_shared and completed_shared["c"] >= 1 and award_badge(profile_id, "shared_goal_complete"):
+            newly_earned.append("shared_goal_complete")
+
+        buddy_pom = fetch_one(
+            """SELECT SUM(spm.cycles_completed) as s FROM shared_pomodoro_members spm
+               JOIN shared_pomodoro sp ON spm.session_id=sp.id
+               WHERE spm.profile_id=? AND sp.is_active=0""",
+            [profile_id]
+        )
+        buddy_pom_total = buddy_pom["s"] if buddy_pom and buddy_pom["s"] else 0
+        if buddy_pom_total >= 5 and award_badge(profile_id, "buddy_pomodoro_5"):
+            newly_earned.append("buddy_pomodoro_5")
+        if buddy_pom_total >= 25 and award_badge(profile_id, "buddy_pomodoro_25"):
+            newly_earned.append("buddy_pomodoro_25")
 
     except Exception as e:
         print(f"[DB] check_and_award_badges error: {e}")
