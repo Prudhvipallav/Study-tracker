@@ -10,9 +10,6 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: StudentTrackPro
 
     steps:
       - name: Checkout code
@@ -29,11 +26,10 @@ jobs:
           pip install -r requirements.txt pyinstaller
 
       - name: Build with PyInstaller
-        run: pyinstaller installer/build.spec --noconfirm --distpath dist --workpath build_work
+        run: pyinstaller installer/build.spec --noconfirm --distpath dist --workpath build_tmp
 
       - name: Install NSIS
         run: choco install nsis -y --no-progress
-        working-directory: ${{ github.workspace }}
 
       - name: Build NSIS Installer
         run: makensis installer/installer.nsi
@@ -42,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: StudentTrackPro-Windows-Installer
-          path: StudentTrackPro/StudentTrackPro_Setup.exe
+          path: StudentTrackPro_Setup.exe
           retention-days: 30
 
       - name: Create GitHub Release (on main push)
@@ -51,15 +47,14 @@ jobs:
         with:
           tag_name: v1.0.${{ github.run_number }}
           name: "🖥️ StudentTrack Pro Desktop v1.0.${{ github.run_number }}"
-          files: StudentTrackPro/StudentTrackPro_Setup.exe
+          files: StudentTrackPro_Setup.exe
           body: |
             ## 🎓 StudentTrack Pro — Windows Desktop Installer
 
             ### Download & Install
             1. Download `StudentTrackPro_Setup.exe`
             2. Run as Administrator
-            3. Follow the installation wizard
-            4. No Python installation required — everything is bundled!
+            3. Follow the installation wizard — no Python needed!
 
             Built from commit `${{ github.sha }}`
         env:

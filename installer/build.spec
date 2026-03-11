@@ -1,23 +1,22 @@
 # -*- mode: python ; coding: utf-8 -*-
 """
 StudentTrack Pro — PyInstaller build spec.
-Run from the StudentTrackPro/ directory:
-  pyinstaller installer/build.spec --noconfirm
+This spec lives in installer/, so all paths use '../' to reach the repo root.
+Run from repo root: pyinstaller installer/build.spec --noconfirm
 """
 
 import os
 
 block_cipher = None
 
-# pathex points to StudentTrackPro/ (the working directory when run)
+# SPECPATH = installer/ directory, so ../  = repo root where main.py lives
 a = Analysis(
-    ['main.py'],
-    pathex=['.'],
+    ['../main.py'],
+    pathex=['..'],
     binaries=[],
     datas=[
-        # Bundle all assets
-        ('assets', 'assets'),
-        ('modules', 'modules'),
+        ('../assets', 'assets'),
+        ('../modules', 'modules'),
     ],
     hiddenimports=[
         'customtkinter',
@@ -65,7 +64,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='assets/icon.ico' if os.path.exists('assets/icon.ico') else None,
+    icon='../assets/icon.ico' if os.path.exists('../assets/icon.ico') else None,
 )
 
 coll = COLLECT(
