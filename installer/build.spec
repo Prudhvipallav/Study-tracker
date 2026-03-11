@@ -1,20 +1,23 @@
 # -*- mode: python ; coding: utf-8 -*-
 """
 StudentTrack Pro — PyInstaller build spec.
-Run: pyinstaller installer/build.spec
+Run from the StudentTrackPro/ directory:
+  pyinstaller installer/build.spec --noconfirm
 """
 
 import os
+
 block_cipher = None
 
+# pathex points to StudentTrackPro/ (the working directory when run)
 a = Analysis(
     ['main.py'],
     pathex=['.'],
     binaries=[],
     datas=[
-        ('assets/icon.ico', 'assets'),
-        ('assets/quotes.json', 'assets'),
-        ('assets/themes/*.json', 'assets/themes'),
+        # Bundle all assets
+        ('assets', 'assets'),
+        ('modules', 'modules'),
     ],
     hiddenimports=[
         'customtkinter',
@@ -24,8 +27,15 @@ a = Analysis(
         'PIL.ImageTk',
         'matplotlib',
         'matplotlib.backends.backend_agg',
+        'matplotlib.backends.backend_tkagg',
+        'plyer',
         'plyer.platforms.win.notification',
         'sqlite3',
+        'tkinter',
+        'tkinter.ttk',
+        'json',
+        'threading',
+        'datetime',
     ],
     hookspath=[],
     hooksconfig={},
@@ -55,8 +65,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='assets/icon.ico',
-    version_file=None,
+    icon='assets/icon.ico' if os.path.exists('assets/icon.ico') else None,
 )
 
 coll = COLLECT(

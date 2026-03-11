@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme_manager.dart';
-import '../home/home_screen.dart';
-import '../todo/todo_screen.dart';
-import '../habits/habits_screen.dart';
-import '../pomodoro/pomodoro_screen.dart';
-import '../more/more_screen.dart';
+import 'home/home_screen.dart';
+import 'todo/todo_screen.dart';
+import 'habits/habits_screen.dart';
+import 'pomodoro/pomodoro_screen.dart';
+import 'more/more_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key});
@@ -15,7 +15,7 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   int _idx = 0;
 
-  static const _screens = [
+  static const List<Widget> _screens = [
     HomeScreen(),
     TodoScreen(),
     HabitsScreen(),

@@ -2,12 +2,17 @@ name: Build Windows Installer
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+    paths-ignore:
+      - 'mobile/**'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: StudentTrackPro
 
     steps:
       - name: Checkout code
@@ -24,10 +29,11 @@ jobs:
           pip install -r requirements.txt pyinstaller
 
       - name: Build with PyInstaller
-        run: pyinstaller installer/build.spec --noconfirm
+        run: pyinstaller installer/build.spec --noconfirm --distpath dist --workpath build_work
 
       - name: Install NSIS
         run: choco install nsis -y --no-progress
+        working-directory: ${{ github.workspace }}
 
       - name: Build NSIS Installer
         run: makensis installer/installer.nsi
@@ -36,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: StudentTrackPro-Windows-Installer
-          path: StudentTrackPro_Setup.exe
+          path: StudentTrackPro/StudentTrackPro_Setup.exe
           retention-days: 30
 
       - name: Create GitHub Release (on main push)
@@ -44,13 +50,17 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.${{ github.run_number }}
-          name: "StudentTrack Pro v1.0.${{ github.run_number }}"
-          files: StudentTrackPro_Setup.exe
+          name: "🖥️ StudentTrack Pro Desktop v1.0.${{ github.run_number }}"
+          files: StudentTrackPro/StudentTrackPro_Setup.exe
           body: |
-            🎓 **StudentTrack Pro — Automated Windows Build**
-            
-            - Built from commit ${{ github.sha }}
-            - Download `StudentTrackPro_Setup.exe` and run as administrator
-            - No Python installation required
+            ## 🎓 StudentTrack Pro — Windows Desktop Installer
+
+            ### Download & Install
+            1. Download `StudentTrackPro_Setup.exe`
+            2. Run as Administrator
+            3. Follow the installation wizard
+            4. No Python installation required — everything is bundled!
+
+            Built from commit `${{ github.sha }}`
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
