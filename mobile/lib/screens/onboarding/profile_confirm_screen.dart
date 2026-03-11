@@ -64,7 +64,7 @@ class _ProfileConfirmScreenState extends State<ProfileConfirmScreen> {
               child: Row(children: [
                 Text(_avatar, style: const TextStyle(fontSize: 52)),
                 const SizedBox(width: 16),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(widget.name, style: TextStyle(color: ThemeManager.textColor, fontSize: 20, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 4),
                   Container(
@@ -78,7 +78,7 @@ class _ProfileConfirmScreenState extends State<ProfileConfirmScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text('Level 1  ·  0 XP', style: TextStyle(color: ThemeManager.textSecondary, fontSize: 12)),
-                ]),
+                ])),
               ]),
             ),
             const Spacer(),
@@ -88,7 +88,7 @@ class _ProfileConfirmScreenState extends State<ProfileConfirmScreen> {
               child: ElevatedButton(
                 onPressed: _saving ? null : _save,
                 child: _saving
-                    ? const CircularProgressIndicator(color: Colors.white)
+                    ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5))
                     : const Text("Let's go! 🚀", style: TextStyle(fontSize: 17)),
               ),
             ),
@@ -101,14 +101,24 @@ class _ProfileConfirmScreenState extends State<ProfileConfirmScreen> {
 
   Future<void> _save() async {
     setState(() => _saving = true);
-    final prov = context.read<ProfileProvider>();
-    await prov.createProfile(widget.name, widget.stream, _avatar);
-    if (mounted) {
-      await ThemeManager.loadTheme(widget.stream);
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const MainShell()),
-        (_) => false,
-      );
+    try {
+      final prov = context.read<ProfileProvider>();
+      await prov.createProfile(widget.name, widget.stream, _avatar);
+      // createProfile already loads the theme — no need to call loadTheme again
+      if (mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const MainShell()),
+          (_) => false,
+        );
+      }
+    } catch (e) {
+      debugPrint('Profile creation error: $e');
+      if (mounted) {
+        setState(() => _saving = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Something went wrong: $e'), backgroundColor: ThemeManager.danger),
+        );
+      }
     }
   }
 }

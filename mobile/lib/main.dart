@@ -11,8 +11,20 @@ import 'screens/main_shell.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService.initialize();
-  await QuoteService.load().catchError((_) {}); // graceful
+
+  // Wrap all pre-launch work in try/catch so the app ALWAYS starts
+  try {
+    await NotificationService.initialize();
+  } catch (e) {
+    debugPrint('NotificationService init failed (non-fatal): $e');
+  }
+
+  try {
+    await QuoteService.load();
+  } catch (e) {
+    debugPrint('QuoteService load failed (non-fatal): $e');
+  }
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
@@ -54,7 +66,14 @@ class _Loader extends StatelessWidget {
     return Scaffold(
       backgroundColor: ThemeManager.background,
       body: Center(
-        child: CircularProgressIndicator(color: ThemeManager.primary),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircularProgressIndicator(color: ThemeManager.primary),
+            const SizedBox(height: 16),
+            Text('Loading…', style: TextStyle(color: ThemeManager.textSecondary, fontSize: 14)),
+          ],
+        ),
       ),
     );
   }
