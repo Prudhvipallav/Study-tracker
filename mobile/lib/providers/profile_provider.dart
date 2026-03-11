@@ -15,19 +15,25 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   Future<void> _load() async {
+    debugPrint('>>> ProfileProvider._load() START');
     _loading = true;
     notifyListeners();
     try {
+      debugPrint('>>> ProfileProvider: opening database...');
       _profile = await DbHelper.instance.fetchOne('SELECT * FROM profiles LIMIT 1');
+      debugPrint('>>> ProfileProvider: profile fetched, hasProfile=${_profile != null}');
       if (_profile != null) {
         final stream = _profile!['stream'] as String? ?? 'engineering';
+        debugPrint('>>> ProfileProvider: loading theme for $stream...');
         await ThemeManager.loadTheme(stream);
+        debugPrint('>>> ProfileProvider: theme loaded');
       }
     } catch (e) {
-      debugPrint('ProfileProvider._load error: $e');
+      debugPrint('>>> ProfileProvider._load ERROR: $e');
       _profile = null;
     }
     _loading = false;
+    debugPrint('>>> ProfileProvider._load() DONE — loading=false, hasProfile=$hasProfile');
     notifyListeners();
   }
 
@@ -41,6 +47,7 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   Future<void> createProfile(String name, String stream, String avatar) async {
+    debugPrint('>>> createProfile START: name=$name stream=$stream');
     await DbHelper.instance.insert('profiles', {
       'name': name,
       'stream': stream,
@@ -51,8 +58,11 @@ class ProfileProvider extends ChangeNotifier {
       'level': 1,
       'dark_mode': 1,
     });
+    debugPrint('>>> createProfile: profile inserted, loading theme...');
     await ThemeManager.loadTheme(stream);
+    debugPrint('>>> createProfile: theme loaded, refreshing...');
     await refresh();
+    debugPrint('>>> createProfile DONE');
   }
 
   Future<void> updateAvatar(String avatar) async {

@@ -19,7 +19,9 @@ class DbHelper {
       path,
       version: 1,
       onCreate: (db, version) async {
-        await db.execute('PRAGMA journal_mode=WAL');
+        // Note: do NOT set PRAGMA journal_mode=WAL here — onCreate runs
+        // inside a transaction and SQLite forbids changing journal mode
+        // in a transaction. sqflite uses WAL by default on Android.
         for (final sql in _allTables) {
           await db.execute(sql);
         }

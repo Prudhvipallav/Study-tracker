@@ -11,22 +11,24 @@ import 'screens/main_shell.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  debugPrint('>>> APP START');
 
-  // Wrap all pre-launch work in try/catch so the app ALWAYS starts
-  try {
-    await NotificationService.initialize();
-  } catch (e) {
-    debugPrint('NotificationService init failed (non-fatal): $e');
-  }
+  // Don't await notification init — run it in the background
+  // This is the #1 cause of startup hangs
+  NotificationService.initialize().timeout(
+    const Duration(seconds: 3),
+    onTimeout: () => debugPrint('>>> NotificationService timed out (OK)'),
+  ).catchError((e) => debugPrint('>>> NotificationService error (OK): $e'));
 
-  try {
-    await QuoteService.load();
-  } catch (e) {
-    debugPrint('QuoteService load failed (non-fatal): $e');
-  }
+  // Load quotes in the background too
+  QuoteService.load().timeout(
+    const Duration(seconds: 2),
+    onTimeout: () => debugPrint('>>> QuoteService timed out (OK)'),
+  ).catchError((e) => debugPrint('>>> QuoteService error (OK): $e'));
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
+  debugPrint('>>> Running app');
   runApp(
     MultiProvider(
       providers: [
@@ -44,6 +46,7 @@ class StudentTrackApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (context, profileProv, _) {
+        debugPrint('>>> Consumer rebuild: loading=${profileProv.loading} hasProfile=${profileProv.hasProfile}');
         return MaterialApp(
           title: 'StudentTrack Pro',
           debugShowCheckedModeBanner: false,
