@@ -32,7 +32,12 @@ jobs:
         run: choco install nsis -y --no-progress
 
       - name: Build NSIS Installer
-        run: makensis installer/installer.nsi
+        run: |
+          $makensis = "C:\Program Files (x86)\NSIS\makensis.exe"
+          if (-not (Test-Path $makensis)) {
+            $makensis = "C:\Program Files\NSIS\makensis.exe"
+          }
+          & $makensis installer/installer.nsi
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4

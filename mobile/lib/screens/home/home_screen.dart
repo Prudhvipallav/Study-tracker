@@ -3,7 +3,6 @@ import '../../theme/theme_manager.dart';
 import '../../database/db_helper.dart';
 import '../../widgets/widgets.dart';
 import '../../services/quote_service.dart';
-import '../todo/todo_screen.dart';
 import '../countdown/countdown_screen.dart';
 import '../goals/goals_screen.dart';
 
@@ -15,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Map<String, dynamic>? _profile;
-  List<Map<String, dynamic>> _habits = [];
   List<Map<String, dynamic>> _habitsToday = [];
   List<Map<String, dynamic>> _countdowns = [];
   List<Map<String, dynamic>> _goals = [];
@@ -54,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (mounted) {
       setState(() {
         _profile = profile;
-        _habits = habits;
         _habitsToday = habits.map((h) => {...h, 'done': doneTodayIds.contains(h['id'])}).toList();
         _countdowns = countdowns;
         _goals = goals;

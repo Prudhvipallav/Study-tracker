@@ -18,9 +18,7 @@ class _StatsScreenState extends State<StatsScreen> {
 
   Future<void> _load() async {
     final db = DbHelper.instance;
-    final today = DateTime.now().toIso8601String().substring(0, 10);
     final week = DateTime.now().subtract(const Duration(days: 7)).toIso8601String().substring(0, 10);
-    final month = DateTime.now().subtract(const Duration(days: 30)).toIso8601String().substring(0, 10);
 
     final totalTasks = await db.fetchOne('SELECT COUNT(*) as c FROM todos WHERE is_completed=1');
     final pomoCycles = await db.fetchOne('SELECT SUM(cycles_completed) as s FROM pomodoro_sessions');

@@ -48,7 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(width: 14),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(name, style: TextStyle(color: ThemeManager.textColor, fontWeight: FontWeight.bold, fontSize: 18)),
-              Text(streamNames[stream] ?? stream, style: TextStyle(color: ThemeManager.primary, fontSize: 13)),
+              Text(_streamNames[stream] ?? stream, style: TextStyle(color: ThemeManager.primary, fontSize: 13)),
               Text('🔒 Stream is permanently locked', style: TextStyle(color: ThemeManager.textSecondary, fontSize: 11)),
             ]),
           ]),

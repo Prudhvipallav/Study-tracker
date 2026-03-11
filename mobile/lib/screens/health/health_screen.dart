@@ -12,7 +12,6 @@ class HealthScreen extends StatefulWidget {
 class _HealthScreenState extends State<HealthScreen> with SingleTickerProviderStateMixin {
   late TabController _tab;
   Map<String, dynamic>? _log;
-  final _today = DateTime.now().toIso8601String().substring(0, 10);
 
   @override
   void initState() { super.initState(); _tab = TabController(length: 4, vsync: this); _load(); }
