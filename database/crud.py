@@ -70,11 +70,11 @@ def delete(table: str, where: dict):
 
 
 def fetch_all(query: str, params: list) -> list:
-    """Execute query and return all rows as list of Row objects."""
+    """Execute query and return all rows as list of dicts."""
     try:
         conn = get_db()
         cur = conn.execute(query, params)
-        rows = cur.fetchall()
+        rows = [dict(r) for r in cur.fetchall()]
         conn.close()
         return rows
     except Exception as e:
@@ -83,13 +83,13 @@ def fetch_all(query: str, params: list) -> list:
 
 
 def fetch_one(query: str, params: list):
-    """Execute query and return a single Row object or None."""
+    """Execute query and return a single dict or None."""
     try:
         conn = get_db()
         cur = conn.execute(query, params)
         row = cur.fetchone()
         conn.close()
-        return row
+        return dict(row) if row else None
     except Exception as e:
         print(f"[DB] fetch_one error: {e}")
         return None
