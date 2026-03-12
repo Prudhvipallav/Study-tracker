@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import '../../theme/theme_manager.dart';
+import 'drawing_screen.dart';
 import '../../database/db_helper.dart';
 import '../../widgets/widgets.dart';
 
@@ -107,35 +110,24 @@ class _NotesScreenState extends State<NotesScreen> {
   void _openEditor(Map<String, dynamic>? existing) {
     final titleCtrl = TextEditingController(text: existing?['title'] as String? ?? '');
     final contentCtrl = TextEditingController(text: existing?['content'] as String? ?? '');
+    // Extract existing drawing if present
+    Uint8List? drawingBytes;
+    final existingContent = existing?['content'] as String? ?? '';
+    if (existingContent.contains('<!-- drawing:')) {
+      final match = RegExp(r'<!-- drawing:(.*?) -->').firstMatch(existingContent);
+      if (match != null) {
+        try { drawingBytes = base64Decode(match.group(1)!); } catch (_) {}
+        contentCtrl.text = existingContent.replaceAll(RegExp(r'\n?<!-- drawing:.*? -->'), '');
+      }
+    }
+
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => Scaffold(
-        backgroundColor: ThemeManager.background,
-        appBar: AppBar(
-          title: Text(existing == null ? 'New Note' : 'Edit Note', style: TextStyle(color: ThemeManager.textColor)),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                final now = DateTime.now().toIso8601String();
-                if (existing == null) {
-                  await DbHelper.instance.insert('notes', {'title': titleCtrl.text.isEmpty ? 'Untitled' : titleCtrl.text, 'content': contentCtrl.text, 'created_at': now, 'updated_at': now});
-                } else {
-                  await DbHelper.instance.updateWhere('notes', {'title': titleCtrl.text, 'content': contentCtrl.text, 'updated_at': now}, 'id=?', [existing['id']]);
-                }
-                Navigator.pop(context);
-                _load();
-              },
-              child: Text('Save', style: TextStyle(color: ThemeManager.primary, fontWeight: FontWeight.bold)),
-            ),
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(children: [
-            TextField(controller: titleCtrl, style: TextStyle(color: ThemeManager.textColor, fontSize: 18, fontWeight: FontWeight.bold), decoration: InputDecoration(hintText: 'Title…', border: InputBorder.none, enabledBorder: InputBorder.none, focusedBorder: InputBorder.none, hintStyle: TextStyle(color: ThemeManager.textSecondary))),
-            Divider(color: ThemeManager.border),
-            Expanded(child: TextField(controller: contentCtrl, style: TextStyle(color: ThemeManager.textColor, fontSize: 15), decoration: InputDecoration(hintText: 'Write something…', border: InputBorder.none, enabledBorder: InputBorder.none, focusedBorder: InputBorder.none, hintStyle: TextStyle(color: ThemeManager.textSecondary)), maxLines: null, expands: true, keyboardType: TextInputType.multiline)),
-          ]),
-        ),
+      builder: (_) => _NoteEditor(
+        titleCtrl: titleCtrl,
+        contentCtrl: contentCtrl,
+        existing: existing,
+        drawingBytes: drawingBytes,
+        onSave: () => _load(),
       ),
     ));
   }
@@ -445,5 +437,140 @@ class _NotesScreenState extends State<NotesScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(msg), backgroundColor: ThemeManager.primary, duration: const Duration(seconds: 3), behavior: SnackBarBehavior.floating),
     );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// NOTE EDITOR WITH DRAWING SUPPORT (FEAT-07)
+// ═══════════════════════════════════════════════════════════════════════════
+
+class _NoteEditor extends StatefulWidget {
+  final TextEditingController titleCtrl;
+  final TextEditingController contentCtrl;
+  final Map<String, dynamic>? existing;
+  final Uint8List? drawingBytes;
+  final VoidCallback onSave;
+
+  const _NoteEditor({
+    required this.titleCtrl,
+    required this.contentCtrl,
+    required this.existing,
+    required this.drawingBytes,
+    required this.onSave,
+  });
+
+  @override
+  State<_NoteEditor> createState() => _NoteEditorState();
+}
+
+class _NoteEditorState extends State<_NoteEditor> {
+  Uint8List? _drawingBytes;
+
+  @override
+  void initState() {
+    super.initState();
+    _drawingBytes = widget.drawingBytes;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: ThemeManager.background,
+      appBar: AppBar(
+        title: Text(widget.existing == null ? 'New Note' : 'Edit Note', style: TextStyle(color: ThemeManager.textColor)),
+        actions: [
+          // Draw button
+          IconButton(
+            icon: const Icon(Icons.draw_outlined),
+            tooltip: 'Open drawing canvas',
+            onPressed: _openDrawing,
+          ),
+          // Save
+          TextButton(
+            onPressed: _save,
+            child: Text('Save', style: TextStyle(color: ThemeManager.primary, fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(children: [
+          TextField(
+            controller: widget.titleCtrl,
+            style: TextStyle(color: ThemeManager.textColor, fontSize: 18, fontWeight: FontWeight.bold),
+            decoration: InputDecoration(hintText: 'Title…', border: InputBorder.none, enabledBorder: InputBorder.none, focusedBorder: InputBorder.none, hintStyle: TextStyle(color: ThemeManager.textSecondary)),
+          ),
+          Divider(color: ThemeManager.border),
+
+          // Drawing preview
+          if (_drawingBytes != null) ...[
+            Stack(children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.memory(_drawingBytes!, width: double.infinity, height: 180, fit: BoxFit.contain),
+              ),
+              Positioned(top: 4, right: 4, child: Row(children: [
+                _miniBtn(Icons.edit, 'Edit drawing', _openDrawing),
+                const SizedBox(width: 4),
+                _miniBtn(Icons.delete_outline, 'Remove drawing', () => setState(() => _drawingBytes = null)),
+              ])),
+            ]),
+            const SizedBox(height: 8),
+          ],
+
+          // Text content
+          Expanded(
+            child: TextField(
+              controller: widget.contentCtrl,
+              style: TextStyle(color: ThemeManager.textColor, fontSize: 15),
+              decoration: InputDecoration(hintText: 'Write something…', border: InputBorder.none, enabledBorder: InputBorder.none, focusedBorder: InputBorder.none, hintStyle: TextStyle(color: ThemeManager.textSecondary)),
+              maxLines: null, expands: true, keyboardType: TextInputType.multiline,
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  Widget _miniBtn(IconData icon, String tooltip, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: ThemeManager.card.withAlpha(200),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(icon, size: 18, color: ThemeManager.textColor),
+      ),
+    );
+  }
+
+  Future<void> _openDrawing() async {
+    final result = await Navigator.of(context).push<DrawingResult>(
+      MaterialPageRoute(builder: (_) => DrawingScreen(existingImage: _drawingBytes)),
+    );
+    if (result != null && result.imageBytes != null) {
+      setState(() => _drawingBytes = result.imageBytes);
+    }
+  }
+
+  Future<void> _save() async {
+    final now = DateTime.now().toIso8601String();
+    String content = widget.contentCtrl.text;
+
+    // Embed drawing as base64 in content
+    if (_drawingBytes != null) {
+      final b64 = base64Encode(_drawingBytes!);
+      content = '$content\n<!-- drawing:$b64 -->';
+    }
+
+    if (widget.existing == null) {
+      await DbHelper.instance.insert('notes', {'title': widget.titleCtrl.text.isEmpty ? 'Untitled' : widget.titleCtrl.text, 'content': content, 'created_at': now, 'updated_at': now});
+    } else {
+      await DbHelper.instance.updateWhere('notes', {'title': widget.titleCtrl.text, 'content': content, 'updated_at': now}, 'id=?', [widget.existing!['id']]);
+    }
+    widget.onSave();
+    if (mounted) Navigator.pop(context);
   }
 }
