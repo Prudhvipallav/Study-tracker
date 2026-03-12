@@ -11,6 +11,7 @@ import 'badges_screen.dart';
 import 'stats_screen.dart';
 import 'notes_screen.dart';
 import 'settings_screen.dart';
+import 'sync_screen.dart';
 
 
 class MoreScreen extends StatelessWidget {
@@ -28,6 +29,7 @@ class MoreScreen extends StatelessWidget {
       _MoreItem('📈', 'Stats', 'Your performance overview', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const StatsScreen()))),
       _MoreItem('🏅', 'Badges', 'Achievements unlocked', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const BadgesScreen()))),
       _MoreItem('⚙️', 'Settings', 'Notifications & preferences', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()))),
+      _MoreItem('🔄', 'Sync', 'Sync with desktop PC', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SyncScreen()))),
     ];
 
 
