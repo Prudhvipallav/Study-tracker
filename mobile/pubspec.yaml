@@ -21,6 +21,8 @@ dependencies:
   provider: ^6.1.1
   intl: ^0.19.0
   flutter_launcher_icons: ^0.13.1
+  audioplayers: ^6.0.0
+  wakelock_plus: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +37,7 @@ flutter:
     - assets/themes/medical.json
     - assets/themes/law.json
     - assets/themes/competitive.json
+    - assets/sounds/
 
 flutter_icons:
   android: true
