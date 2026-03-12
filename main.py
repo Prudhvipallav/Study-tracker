@@ -11,11 +11,32 @@ Architecture:
 
 import os
 import sys
+import traceback
+import logging
 import customtkinter as ctk
 import importlib
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, ROOT)
+
+# ---------------------------------------------------------------------------
+# Global crash handler — logs to ~/.studenttrackpro/crash.log
+# ---------------------------------------------------------------------------
+_LOG_DIR = os.path.join(os.path.expanduser("~"), ".studenttrackpro")
+os.makedirs(_LOG_DIR, exist_ok=True)
+logging.basicConfig(
+    filename=os.path.join(_LOG_DIR, "crash.log"),
+    level=logging.ERROR,
+    format="%(asctime)s — %(levelname)s — %(message)s",
+)
+
+def _crash_handler(exc_type, exc_value, exc_tb):
+    """Log unhandled exceptions to crash.log before propagating."""
+    logging.error("Unhandled exception", exc_info=(exc_type, exc_value, exc_tb))
+    sys.__excepthook__(exc_type, exc_value, exc_tb)
+
+sys.excepthook = _crash_handler
+
 
 from database.db import (
     init_db, get_all_profiles, get_settings, get_profile,

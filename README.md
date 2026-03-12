@@ -8,9 +8,14 @@
 ![CustomTkinter](https://img.shields.io/badge/CustomTkinter-5.x-blue?style=for-the-badge)
 ![SQLite](https://img.shields.io/badge/SQLite-Local--First-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![Platform](https://img.shields.io/badge/Platform-Windows%20(tested)-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+
+[![Build Windows Installer](https://github.com/Prudhvipallav/Study-tracker/actions/workflows/build.yml/badge.svg)](https://github.com/Prudhvipallav/Study-tracker/actions/workflows/build.yml)
+[![Build Android APK](https://github.com/Prudhvipallav/Study-tracker/actions/workflows/build_apk.yml/badge.svg)](https://github.com/Prudhvipallav/Study-tracker/actions/workflows/build_apk.yml)
 
 </div>
+
+> ⚠️ **macOS / Linux**: The desktop app uses CustomTkinter which supports all platforms, but is currently tested on Windows only. Contributions and test reports from macOS/Linux users are welcome!
 
 ---
 
@@ -45,17 +50,39 @@ git clone https://github.com/Prudhvipallav/Study-tracker.git
 cd Study-tracker
 ```
 
-### 2. Install dependencies
+### 2. Create a virtual environment (recommended)
+```bash
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# macOS / Linux:
+source venv/bin/activate
+```
+
+### 3. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Run the app
+### 4. Run the app
 ```bash
 python main.py
 ```
 
 The **onboarding wizard** will guide you through creating your first profile on first launch.
+
+> 💡 **`launch.pyw`** is a Windows-only convenience wrapper that runs the app without showing a console window (uses `pythonw.exe`). Use `main.py` for normal usage and debugging.
+
+---
+
+## 🧪 Running Tests
+
+```bash
+pip install pytest
+python -m pytest tests/ -v
+```
+
+Tests use a temporary SQLite database per test — no setup or teardown needed.
 
 ---
 
@@ -64,7 +91,7 @@ The **onboarding wizard** will guide you through creating your first profile on 
 Every action earns you XP — complete tasks, build habits, stay consistent!
 
 | Action | XP |
-|--------|----|
+|--------|-----|
 | ✅ Complete a task | +10 XP |
 | 🔁 Habit check-in | +5 XP |
 | 🎯 Complete a goal | +100 XP |
@@ -94,10 +121,15 @@ Every **500 XP = Level Up!** Level names are stream-specific (e.g. Engineering: 
 
 ```
 StudentTrackPro/
-├── main.py                  # App entry point (single-root CTk)
-├── requirements.txt
+├── main.py                  # App entry point (with crash logging)
+├── launch.pyw               # Windows-only consoleless launcher
+├── requirements.txt         # Pinned dependencies
 ├── database/
-│   └── db.py                # SQLite schema + CRUD + XP/badge engine
+│   ├── connection.py        # DB_DIR, DB_PATH, get_db()
+│   ├── schema.py            # All CREATE TABLE + init_db()
+│   ├── crud.py              # Generic CRUD + profile/settings helpers
+│   ├── gamification.py      # XP, levels, badge definitions & engine
+│   └── db.py                # Backward-compatible re-export shim
 ├── modules/                 # 16 feature modules
 │   ├── home.py · todo.py · goals.py · habits.py
 │   ├── timetable.py · countdown.py · pomodoro.py
@@ -105,10 +137,28 @@ StudentTrackPro/
 │   ├── health.py · attendance.py · stats.py
 │   ├── gamification.py · weekly_review.py · settings.py
 │   └── theme_manager.py
-└── assets/
-    ├── quotes.json          # 100+ motivational quotes
-    └── themes/              # 4 stream colour themes
+├── tests/
+│   ├── conftest.py          # Pytest fixtures (temp DB per test)
+│   └── test_db.py           # CRUD, XP, badge tests
+├── assets/
+│   ├── quotes.json          # 100+ motivational quotes
+│   └── themes/              # 4 stream colour themes
+└── mobile/                  # 📱 Flutter companion app (see mobile/README.md)
 ```
+
+---
+
+## 📱 Mobile Companion App
+
+A standalone **Flutter/Dart** mobile app lives in the `mobile/` directory. It's a separate offline app with its own SQLite database — **no sync layer** between desktop and mobile.
+
+See **[mobile/README.md](mobile/README.md)** for build instructions and features.
+
+---
+
+## 🔧 Error Handling
+
+Unhandled crashes are logged to `~/.studenttrackpro/crash.log`. If the app fails to launch or shows a blank window, check this file for stack traces.
 
 ---
 
@@ -119,6 +169,7 @@ StudentTrackPro/
 - **Charts** — Matplotlib + Pillow
 - **Notifications** — Plyer
 - **Packaging** — PyInstaller
+- **Tests** — Pytest
 
 > 🔒 **100% local-first. No internet required. Your data never leaves your device.**
 
