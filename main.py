@@ -16,7 +16,11 @@ import logging
 import customtkinter as ctk
 import importlib
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
+# When running as a PyInstaller bundle, assets are extracted to sys._MEIPASS
+if getattr(sys, 'frozen', False):
+    ROOT = sys._MEIPASS
+else:
+    ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, ROOT)
 
 # ---------------------------------------------------------------------------
