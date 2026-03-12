@@ -320,6 +320,22 @@ def init_db():
             if s:
                 conn.execute(s)
         conn.commit()
+
+        # ── Safe migrations for existing databases ──────────────────────
+        # Each ALTER TABLE is wrapped in try/except so it's idempotent.
+        # If the column already exists, SQLite raises an error that we
+        # silently ignore.
+        _migrations = [
+            "ALTER TABLE profiles ADD COLUMN last_seen TEXT",
+            "ALTER TABLE profiles ADD COLUMN dark_mode INTEGER DEFAULT 1",
+        ]
+        for migration in _migrations:
+            try:
+                conn.execute(migration)
+                conn.commit()
+            except Exception:
+                pass  # Column already exists — safe to ignore
+
         conn.close()
     except Exception as e:
         print(f"[DB] init_db error: {e}")
