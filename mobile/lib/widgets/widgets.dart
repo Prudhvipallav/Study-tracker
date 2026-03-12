@@ -56,7 +56,7 @@ class StatCard extends StatelessWidget {
         color: ThemeManager.card,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: ThemeManager.border),
-        boxShadow: [BoxShadow(color: ThemeManager.primary.withOpacity(0.08), blurRadius: 8)],
+        boxShadow: [BoxShadow(color: ThemeManager.primary.withAlpha(20), blurRadius: 8)],
       ),
       child: Column(
         children: [
@@ -143,9 +143,9 @@ class StreamBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: ThemeManager.primary.withOpacity(0.15),
+        color: ThemeManager.primary.withAlpha(38),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: ThemeManager.primary.withOpacity(0.4)),
+        border: Border.all(color: ThemeManager.primary.withAlpha(102)),
       ),
       child: Text(
         '${_icons[stream] ?? '🎓'} ${_names[stream] ?? stream}',
@@ -177,7 +177,7 @@ class MoodPicker extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: isSelected ? ThemeManager.primary.withOpacity(0.2) : ThemeManager.surface,
+              color: isSelected ? ThemeManager.primary.withAlpha(51) : ThemeManager.surface,
               borderRadius: BorderRadius.circular(28),
               border: Border.all(
                 color: isSelected ? ThemeManager.primary : ThemeManager.border,
@@ -270,8 +270,8 @@ class BadgeCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: ThemeManager.card,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: earned ? ThemeManager.primary.withOpacity(0.5) : ThemeManager.border),
-            boxShadow: earned ? [BoxShadow(color: ThemeManager.primary.withOpacity(0.15), blurRadius: 8)] : null,
+            border: Border.all(color: earned ? ThemeManager.primary.withAlpha(128) : ThemeManager.border),
+            boxShadow: earned ? [BoxShadow(color: ThemeManager.primary.withAlpha(38), blurRadius: 8)] : null,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

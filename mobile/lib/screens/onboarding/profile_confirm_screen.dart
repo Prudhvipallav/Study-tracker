@@ -41,7 +41,7 @@ class _ProfileConfirmScreenState extends State<ProfileConfirmScreen> {
                     duration: const Duration(milliseconds: 200),
                     width: 60, height: 60,
                     decoration: BoxDecoration(
-                      color: sel ? ThemeManager.primary.withOpacity(0.2) : ThemeManager.surface,
+                      color: sel ? ThemeManager.primary.withAlpha(51) : ThemeManager.surface,
                       borderRadius: BorderRadius.circular(30),
                       border: Border.all(color: sel ? ThemeManager.primary : ThemeManager.border, width: sel ? 2 : 1),
                     ),
@@ -58,8 +58,8 @@ class _ProfileConfirmScreenState extends State<ProfileConfirmScreen> {
               decoration: BoxDecoration(
                 color: ThemeManager.card,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: ThemeManager.primary.withOpacity(0.4), width: 2),
-                boxShadow: [BoxShadow(color: ThemeManager.primary.withOpacity(0.15), blurRadius: 20)],
+                border: Border.all(color: ThemeManager.primary.withAlpha(102), width: 2),
+                boxShadow: [BoxShadow(color: ThemeManager.primary.withAlpha(38), blurRadius: 20)],
               ),
               child: Row(children: [
                 Text(_avatar, style: const TextStyle(fontSize: 52)),
@@ -70,7 +70,7 @@ class _ProfileConfirmScreenState extends State<ProfileConfirmScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: ThemeManager.primary.withOpacity(0.15),
+                      color: ThemeManager.primary.withAlpha(38),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text('${_streamIcons[widget.stream]} ${widget.stream[0].toUpperCase()}${widget.stream.substring(1)}',

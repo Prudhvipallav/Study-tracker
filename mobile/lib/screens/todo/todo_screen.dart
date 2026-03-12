@@ -111,7 +111,7 @@ class _TodoScreenState extends State<TodoScreen> {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
         decoration: BoxDecoration(
-          color: overdue ? ThemeManager.danger.withOpacity(0.08) : ThemeManager.card,
+          color: overdue ? ThemeManager.danger.withAlpha(20) : ThemeManager.card,
           borderRadius: BorderRadius.circular(14),
           border: Border(left: BorderSide(color: pColor, width: 4)),
         ),
@@ -134,7 +134,7 @@ class _TodoScreenState extends State<TodoScreen> {
           ]),
           trailing: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(color: pColor.withOpacity(0.15), borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(color: pColor.withAlpha(38), borderRadius: BorderRadius.circular(8)),
             child: Text((task['priority'] as String? ?? 'medium').toUpperCase(), style: TextStyle(color: pColor, fontSize: 10, fontWeight: FontWeight.bold)),
           ),
         ),

@@ -53,8 +53,8 @@ class MoreScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: ThemeManager.card,
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: ThemeManager.primary.withOpacity(0.4), width: 2),
-                  boxShadow: [BoxShadow(color: ThemeManager.primary.withOpacity(0.12), blurRadius: 20)],
+                  border: Border.all(color: ThemeManager.primary.withAlpha(102), width: 2),
+                  boxShadow: [BoxShadow(color: ThemeManager.primary.withAlpha(31), blurRadius: 20)],
                 ),
                 child: Column(children: [
                   Row(children: [

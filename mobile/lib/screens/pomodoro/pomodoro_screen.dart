@@ -333,7 +333,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
         Expanded(child: Text(label, style: TextStyle(color: ThemeManager.textColor, fontSize: 13))),
         Switch(
           value: value,
-          activeColor: ThemeManager.primary,
+          activeTrackColor: ThemeManager.primary,
           onChanged: onChanged,
         ),
       ]),

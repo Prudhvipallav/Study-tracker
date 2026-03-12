@@ -48,9 +48,9 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => _StudyScreen(deck: deck))).then((_) => _load()),
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [ThemeManager.primary.withOpacity(0.2), ThemeManager.card], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          gradient: LinearGradient(colors: [ThemeManager.primary.withAlpha(51), ThemeManager.card], begin: Alignment.topLeft, end: Alignment.bottomRight),
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: ThemeManager.primary.withOpacity(0.3)),
+          border: Border.all(color: ThemeManager.primary.withAlpha(77)),
         ),
         child: Padding(
           padding: const EdgeInsets.all(14),
@@ -221,13 +221,13 @@ class _StudyScreenState extends State<_StudyScreen> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: _showAnswer
-                              ? [ThemeManager.success.withOpacity(0.15), ThemeManager.card]
-                              : [ThemeManager.primary.withOpacity(0.15), ThemeManager.card],
+                              ? [ThemeManager.success.withAlpha(38), ThemeManager.card]
+                              : [ThemeManager.primary.withAlpha(38), ThemeManager.card],
                           begin: Alignment.topLeft, end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(24),
-                        border: Border.all(color: _showAnswer ? ThemeManager.success.withOpacity(0.4) : ThemeManager.primary.withOpacity(0.4), width: 2),
-                        boxShadow: [BoxShadow(color: (_showAnswer ? ThemeManager.success : ThemeManager.primary).withOpacity(0.1), blurRadius: 20)],
+                        border: Border.all(color: _showAnswer ? ThemeManager.success.withAlpha(102) : ThemeManager.primary.withAlpha(102), width: 2),
+                        boxShadow: [BoxShadow(color: (_showAnswer ? ThemeManager.success : ThemeManager.primary).withAlpha(26), blurRadius: 20)],
                       ),
                       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                         Text(_showAnswer ? '✅ Answer' : '❓ Question', style: TextStyle(color: _showAnswer ? ThemeManager.success : ThemeManager.primary, fontSize: 13, fontWeight: FontWeight.w600, letterSpacing: 1)),

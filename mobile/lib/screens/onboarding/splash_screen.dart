@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen>
               decoration: BoxDecoration(
                 gradient: RadialGradient(colors: [ThemeManager.primary, ThemeManager.background]),
                 borderRadius: BorderRadius.circular(28),
-                boxShadow: [BoxShadow(color: ThemeManager.primary.withOpacity(0.4), blurRadius: 30, spreadRadius: 5)],
+                boxShadow: [BoxShadow(color: ThemeManager.primary.withAlpha(102), blurRadius: 30, spreadRadius: 5)],
               ),
               child: const Center(child: Text('🎓', style: TextStyle(fontSize: 52))),
             ),

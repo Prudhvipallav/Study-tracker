@@ -53,12 +53,12 @@ class _StreamSelectScreenState extends State<StreamSelectScreen> {
                       duration: const Duration(milliseconds: 200),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [col.withOpacity(isSelected ? 0.3 : 0.1), ThemeManager.card],
+                          colors: [col.withAlpha(isSelected ? 77 : 26), ThemeManager.card],
                           begin: Alignment.topLeft, end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(color: isSelected ? col : ThemeManager.border, width: isSelected ? 2.5 : 1),
-                        boxShadow: isSelected ? [BoxShadow(color: col.withOpacity(0.3), blurRadius: 16)] : null,
+                        boxShadow: isSelected ? [BoxShadow(color: col.withAlpha(77), blurRadius: 16)] : null,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(16),

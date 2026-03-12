@@ -42,7 +42,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         // Profile card
         Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(color: ThemeManager.card, borderRadius: BorderRadius.circular(16), border: Border.all(color: ThemeManager.primary.withOpacity(0.4))),
+          decoration: BoxDecoration(color: ThemeManager.card, borderRadius: BorderRadius.circular(16), border: Border.all(color: ThemeManager.primary.withAlpha(102))),
           child: Row(children: [
             Text(avatar, style: const TextStyle(fontSize: 44)),
             const SizedBox(width: 14),

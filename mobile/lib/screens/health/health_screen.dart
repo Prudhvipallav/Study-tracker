@@ -620,7 +620,6 @@ class _HealthScreenState extends State<HealthScreen> with SingleTickerProviderSt
               child: Column(
                 children: _weekLogs.map((log) {
                   final m = (log['exercise_minutes'] as int?) ?? 0;
-                  final t = (log['exercise_type'] as String?) ?? '';
                   final date = log['date'] as String? ?? '';
                   final day = date.length >= 10 ? _shortDay(date) : '?';
                   return Padding(
