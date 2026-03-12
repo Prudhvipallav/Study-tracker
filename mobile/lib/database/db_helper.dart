@@ -271,6 +271,15 @@ class DbHelper {
     return row;
   }
 
+  Future<List<Map<String, dynamic>>> getWeekHealthLogs() async {
+    final today = DateTime.now();
+    final weekAgo = today.subtract(const Duration(days: 6));
+    return fetchAll(
+      'SELECT * FROM health_logs WHERE date >= ? ORDER BY date ASC',
+      [weekAgo.toIso8601String().substring(0, 10)],
+    );
+  }
+
   // ── Badge System ──────────────────────────────────────────────────────────
 
   Future<List<String>> checkAndAwardBadges() async {
