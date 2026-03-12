@@ -555,7 +555,25 @@ class MainAppFrame(ctk.CTkFrame):
 # Entry point
 # ===========================================================================
 
+def _start_sync_server_thread():
+    """Start the sync HTTP server in a daemon thread so it dies with the app."""
+    import threading
+    from sync_server import start_sync_server, get_local_ip, SYNC_PORT
+    ip = get_local_ip()
+    print(f"🔄 Sync server starting on http://{ip}:{SYNC_PORT}")
+    t = threading.Thread(target=start_sync_server, daemon=True)
+    t.start()
+    return ip
+
+
 if __name__ == "__main__":
     init_db()
     ensure_icon()
+    # Start sync server in background (auto-available for mobile)
+    try:
+        sync_ip = _start_sync_server_thread()
+        print(f"✅ Sync ready — enter {sync_ip} in your mobile app")
+    except Exception as e:
+        sync_ip = None
+        print(f"⚠️ Sync server failed to start: {e}")
     App().mainloop()

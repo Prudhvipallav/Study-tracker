@@ -45,3 +45,8 @@ desktop.ini
 # Installer output
 *.exe
 *.msi
+
+dist/
+build/
+*.spec
+__pycache__/
