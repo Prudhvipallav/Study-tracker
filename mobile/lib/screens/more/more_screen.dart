@@ -29,7 +29,7 @@ class MoreScreen extends StatelessWidget {
       _MoreItem('📈', 'Stats', 'Your performance overview', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const StatsScreen()))),
       _MoreItem('🏅', 'Badges', 'Achievements unlocked', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const BadgesScreen()))),
       _MoreItem('⚙️', 'Settings', 'Notifications & preferences', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()))),
-      _MoreItem('🔄', 'Sync', 'Sync with desktop PC', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SyncScreen()))),
+      _MoreItem('📲', 'Transfer', 'Move data to/from PC', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SyncScreen()))),
     ];
 
 
