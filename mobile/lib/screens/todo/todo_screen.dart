@@ -97,7 +97,7 @@ class _TodoScreenState extends State<TodoScreen> {
         alignment: Alignment.centerRight, color: ThemeManager.danger, padding: const EdgeInsets.only(right: 20),
         child: const Icon(Icons.delete, color: Colors.white),
       ),
-      onDismissed: (dir) async {
+      confirmDismiss: (dir) async {
         if (dir == DismissDirection.startToEnd) {
           await DbHelper.instance.updateWhere('todos', {'is_completed': 1, 'completed_at': DateTime.now().toIso8601String()}, 'id=?', [task['id']]);
           await DbHelper.instance.awardXp(10, 'complete_task');
@@ -105,8 +105,19 @@ class _TodoScreenState extends State<TodoScreen> {
           if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: const Text('+10 XP ⭐'), backgroundColor: ThemeManager.primary, duration: const Duration(seconds: 1)));
         } else {
           await DbHelper.instance.deleteWhere('todos', 'id=?', [task['id']]);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Task "${task['title']}" deleted'),
+              action: SnackBarAction(label: 'Undo', onPressed: () async {
+                await DbHelper.instance.insert('todos', task);
+                _load();
+              }),
+              duration: const Duration(seconds: 3),
+            ));
+          }
         }
         await _load();
+        return false;
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),

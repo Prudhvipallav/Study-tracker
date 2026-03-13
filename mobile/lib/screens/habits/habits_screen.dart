@@ -110,7 +110,21 @@ class _HabitsScreenState extends State<HabitsScreen> with SingleTickerProviderSt
     return Dismissible(
       key: Key('habit_${h['id']}'),
       direction: DismissDirection.endToStart,
-      onDismissed: (_) async { await DbHelper.instance.updateWhere('habits', {'is_archived': 1}, 'id=?', [h['id']]); _load(); },
+      confirmDismiss: (_) async {
+        await DbHelper.instance.updateWhere('habits', {'is_archived': 1}, 'id=?', [h['id']]);
+        _load();
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('"${h['name']}" archived'),
+            action: SnackBarAction(label: 'Undo', onPressed: () async {
+              await DbHelper.instance.updateWhere('habits', {'is_archived': 0}, 'id=?', [h['id']]);
+              _load();
+            }),
+            duration: const Duration(seconds: 3),
+          ));
+        }
+        return false;
+      },
       background: Container(alignment: Alignment.centerRight, padding: const EdgeInsets.only(right: 20), color: ThemeManager.warning, child: const Text('Archive', style: TextStyle(color: Colors.white))),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),

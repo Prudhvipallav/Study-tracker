@@ -76,7 +76,21 @@ class _NotesScreenState extends State<NotesScreen> {
     return Dismissible(
       key: Key('note_${n['id']}'),
       direction: DismissDirection.endToStart,
-      onDismissed: (_) { DbHelper.instance.deleteWhere('notes', 'id=?', [n['id']]); _load(); },
+      confirmDismiss: (_) async {
+        await DbHelper.instance.deleteWhere('notes', 'id=?', [n['id']]);
+        _load();
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Note "${n['title']}" deleted'),
+            action: SnackBarAction(label: 'Undo', onPressed: () async {
+              await DbHelper.instance.insert('notes', n);
+              _load();
+            }),
+            duration: const Duration(seconds: 3),
+          ));
+        }
+        return false; // Already handled above
+      },
       background: Container(alignment: Alignment.centerRight, padding: const EdgeInsets.only(right: 20), color: ThemeManager.danger, child: const Icon(Icons.delete, color: Colors.white)),
       child: GestureDetector(
         onTap: () => _editNote(n),

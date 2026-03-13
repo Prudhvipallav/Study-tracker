@@ -32,7 +32,21 @@ class _CountdownScreenState extends State<CountdownScreen> {
               itemCount: _items.length,
               itemBuilder: (_, i) => CountdownCard(
                 exam: _items[i],
-                onDelete: () async { await DbHelper.instance.updateWhere('countdowns', {'is_archived': 1}, 'id=?', [_items[i]['id']]); _load(); },
+                onDelete: () async {
+                  final item = _items[i];
+                  await DbHelper.instance.updateWhere('countdowns', {'is_archived': 1}, 'id=?', [item['id']]);
+                  _load();
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('"${item['title']}" archived'),
+                      action: SnackBarAction(label: 'Undo', onPressed: () async {
+                        await DbHelper.instance.updateWhere('countdowns', {'is_archived': 0}, 'id=?', [item['id']]);
+                        _load();
+                      }),
+                      duration: const Duration(seconds: 3),
+                    ));
+                  }
+                },
               ),
             ),
       floatingActionButton: FloatingActionButton(
